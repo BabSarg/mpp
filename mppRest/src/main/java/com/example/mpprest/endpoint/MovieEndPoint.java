@@ -44,7 +44,7 @@ public class MovieEndPoint {
     }
 
     @GetMapping("/findByYear")
-    public List<Movie> findByYear(@RequestParam("year") Date year)  {
+    public List<Movie> findByYear(@RequestParam("year") String year)  {
         return movieService.findByYear(year);
     }
 

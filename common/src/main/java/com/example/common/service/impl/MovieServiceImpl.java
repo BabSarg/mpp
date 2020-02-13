@@ -40,8 +40,7 @@ public class MovieServiceImpl implements MovieService {
 
 
 
-
-    public List<Movie> findByYear(Date year){
+    public List<Movie> findByYear(String year){
         return movieRepository.findByYear(year);
     }
 

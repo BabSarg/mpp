@@ -17,7 +17,7 @@ public interface MovieService {
     List<Movie> findByMultiCats(String name);
 
 
-    List<Movie> findByYear(Date year);
+    List<Movie> findByYear(String year);
 
     List<Movie> findByActors(String actorName);
 

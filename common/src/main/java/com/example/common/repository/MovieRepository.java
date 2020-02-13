@@ -10,7 +10,7 @@ import java.util.List;
 public interface MovieRepository extends JpaRepository<Movie,Integer> {
 
      List<Movie> findByMultiCats(String  name);
-     List<Movie> findByYear(Date year);
+     List<Movie> findByYear(String year);
      List<Movie> findByActors(String actorName);
      List<Movie> findByRating(double rating);
      Object findMovieByTitle(String title);
