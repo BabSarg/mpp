@@ -4,21 +4,25 @@ import com.example.common.exception.UserNotFoundException;
 import com.example.common.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
-    boolean isExists(String email);
+    User isExists(String email) throws UserNotFoundException;
 
-    boolean isExists(int id);
+    Optional<User> isExists(int id) throws UserNotFoundException;
 
     List<User> findAll();
 
     void save(User user);
 
-    User findById(int id) throws UserNotFoundException;
+    Optional<User> findById(int id) throws UserNotFoundException;
 
     User findByEmail(String email) throws UserNotFoundException;
 
     void deleteById(int id);
 
+    void activateUser(String token);
+
+    void registerUser(User user);
 }

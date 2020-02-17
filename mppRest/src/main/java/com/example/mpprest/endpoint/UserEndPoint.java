@@ -26,6 +26,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/rest/users")
+@CrossOrigin(origins = "*")
 public class UserEndPoint {
 
     private final PasswordEncoder passwordEncoder;
@@ -67,14 +68,19 @@ public class UserEndPoint {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
     }
 
+    @GetMapping("activateUser")
+    public ResponseEntity activate(@RequestParam("token") String token) {
+        userService.activateUser(token);
+        return ResponseEntity.ok().build();
+    }
 
     @PostMapping
-    public ResponseEntity saveUser(@RequestBody User user) {
-        if (userService.isExists(user.getEmail())) {
+    public ResponseEntity saveUser(@RequestBody User user) throws UserNotFoundException {
+        if (userService.isExists(user.getEmail()) != null) {
             return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userService.save(user);
+        userService.registerUser(user);
         return ResponseEntity.ok(user.getId());
     }
 
@@ -82,9 +88,9 @@ public class UserEndPoint {
     @PutMapping("/addImage/{userId}")
     public ResponseEntity addImage(@PathVariable("userId") int userId, @RequestParam(value = "file") MultipartFile file) {
         try {
-            User byId = userService.findById(userId);
+            User byId = userService.findById(userId).get();
             String fileName = System.currentTimeMillis() + "_" + file.getOriginalFilename();
-            File uploadFile = new File("C:\\Users\\Mher\\Desktop\\mpp\\imageUploadDir\\", fileName);
+            File uploadFile = new File("C:\\Users\\Vard\\Desktop\\mpp\\moviePortal\\image", fileName);
             file.transferTo(uploadFile);
             Image image = new Image();
             image.setName(fileName);
@@ -103,7 +109,7 @@ public class UserEndPoint {
     @GetMapping("/movieByUserId")
     public void findMovieByUserId(@RequestParam (value = "movies") List<Integer> movies,@AuthenticationPrincipal CurrentUser user) throws UserNotFoundException {
 
-        User byUserId = userService.findById(user.getUser().getId());
+        User byUserId = userService.findById(user.getUser().getId()).get();
         List<Movie> movieList = movieService.addMovie(movies);
         byUserId.setMovies(movieList);
         userService.save(byUserId);

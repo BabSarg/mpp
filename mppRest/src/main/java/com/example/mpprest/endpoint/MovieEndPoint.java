@@ -9,11 +9,12 @@ import com.example.common.service.MultiCatService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
 @RequestMapping("/rest/movies")
+@CrossOrigin(origins = "*")
+
 public class MovieEndPoint {
 
     private final MovieService movieService;

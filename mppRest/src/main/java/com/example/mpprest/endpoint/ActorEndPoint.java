@@ -4,15 +4,14 @@ package com.example.mpprest.endpoint;
 import com.example.common.model.Actor;
 import com.example.common.service.ActorService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/rest/actor")
+@CrossOrigin(origins = "*")
+
 public class ActorEndPoint {
 
     private final ActorService actorService;

@@ -2,6 +2,7 @@ package com.example.common.service.impl;
 
 
 import com.example.common.model.Image;
+import com.example.common.model.User;
 import com.example.common.repository.ImageRepository;
 import com.example.common.service.ImageService;
 import org.apache.commons.io.IOUtils;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,7 +33,7 @@ public class ImageServiceImpl implements ImageService {
 
 
     @Override
-    public Image addImage(MultipartFile file) throws IOException {
+    public Image addImage(List<Integer> categories, MultipartFile file, User user) throws IOException {
 
         String fileName = System.currentTimeMillis() + " " + file.getOriginalFilename();
         File uploadFile = new File(imageUploadDir,fileName);

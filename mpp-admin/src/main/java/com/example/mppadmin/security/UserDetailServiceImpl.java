@@ -1,4 +1,5 @@
-package com.example.mpprest.security;
+package com.example.mppadmin.security;
+
 
 import com.example.common.model.User;
 import com.example.common.repository.UserRepository;
@@ -9,17 +10,18 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CurrentUserDetailServiceImpl implements UserDetailsService {
+public class UserDetailServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String surname) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(surname);
-        if (user == null) {
-            throw new UsernameNotFoundException("Username not found");
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User byEmail = userRepository.findByEmail(username);
+        if (byEmail == null) {
+            throw new UsernameNotFoundException("User with " + username + " username does not exists!");
         }
-        return new CurrentUser(user);
+
+        return new CurrentUser(byEmail);
     }
 }
